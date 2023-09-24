@@ -21,7 +21,6 @@ public:
         int cnt = 0;
         while(curr != NULL){
           if(curr->val < x){
-            cnt++;
             l1end->next = curr;
             l1end = l1end->next;
           }
@@ -32,8 +31,6 @@ public:
           curr = curr->next;
         }
         l2end->next = NULL;
-        if(cnt == 0)
-          return l2->next;
         l1end->next = l2->next;
         return l1->next;
     }
