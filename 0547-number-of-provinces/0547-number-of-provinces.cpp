@@ -11,7 +11,7 @@ public:
               q.push(i);
               while(!q.empty()){
                 int j = q.front();
-                vis[q.front()] = true;
+                vis[q.front()] = 1;
                 q.pop();
                 for(int k = 0; k < n; k++){
                   if(isConnected[j][k] == 1 && vis[k]!=1 && k!=j)
