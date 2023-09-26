@@ -15,12 +15,8 @@ public:
         if(root == NULL)
             return 0;
         int lh = checkBalanced(root->left);
-        if(lh == -1)
-            return -1;
         int rh = checkBalanced(root->right);
-        if(rh == -1)
-            return -1;
-        if(abs(lh-rh)>1)
+        if(abs(lh-rh)>1 || lh == -1 || rh == -1)
             return -1;
         else
             return max(lh,rh)+1;                
