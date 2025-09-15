@@ -16,8 +16,8 @@ public:
             pq.pop();
             if(node == end_node)
                 return p;
-            // if(prob[node] > p)
-            //     continue;
+            if(prob[node] > p)
+                continue;
             for(auto x: adj[node]){
                 if(p*x.second > prob[x.first]){
                     prob[x.first] = p*x.second;
