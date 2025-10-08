@@ -16,7 +16,7 @@ public:
     vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success){
         sort(potions.begin(), potions.end());
         int n = spells.size();
-        vector<int> ans(n);
+        vector<int> ans(n,0);
         for(int i = 0; i < n; i++){
             int idx = bs(potions, spells[i], success);
             if(idx != -1)
