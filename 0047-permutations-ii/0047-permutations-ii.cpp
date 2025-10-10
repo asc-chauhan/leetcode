@@ -1,21 +1,26 @@
-class Solution {
+class Solution{
 public:
-    vector<vector<int>> permuteUnique(vector<int>& nums) {
-        vector<vector<int>> output;
-        sort(begin(nums), end(nums));
-        generatePermutations(nums, output, 0);
-        return output;
+    void swap(int& a, int& b) {
+        int temp = a;
+        a = b;
+        b = temp;
     }
-private:
-    void generatePermutations(vector<int> nums, vector<vector<int>>& output, int idx) {
-        if (idx == size(nums)) {
-            output.emplace_back(nums);
+    void backtrack(int id, vector<int>nums, vector<vector<int>>& ans){
+        if(id == nums.size()){
+            ans.push_back(nums);
         }
-        for (int i = idx; i < size(nums); ++i) {
-            if (i != idx && nums[i] == nums[idx]) continue;
-            swap(nums[i], nums[idx]);
-            generatePermutations(nums, output, idx + 1);
+        for(int i = id; i < nums.size(); i++){
+            if(i != id && nums[i] == nums[id])
+                continue;
+            swap(nums[i], nums[id]);
+            backtrack(id+1, nums, ans);
         }
+    }
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> ans;
+        sort(nums.begin(), nums.end());
+        backtrack(0, nums, ans);
+        return ans; 
     }
 };
 
