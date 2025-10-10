@@ -1,5 +1,10 @@
 class Solution {
 public:
+    void swap(int& a, int& b) {
+        int temp = a;
+        a = b;
+        b = temp;
+    }
     void backtrack(int id, vector<int>& nums, vector<vector<int>>& ans){
         if(id == nums.size()){
             ans.push_back(nums);
