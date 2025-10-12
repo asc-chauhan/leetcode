@@ -1,29 +1,28 @@
 class Solution {
 public:
-    long long solve(int idx, vector<pair<long long,long long>> &v, vector<long long> &dp){
-        if(idx>=v.size())
-            return 0;
-        if(dp[idx]!=-1) 
-            return dp[idx];
-        //skip current
-        long long skip = solve(idx+1,v,dp);
-        //if we consider the current one -> we need to decide what will be the next valid idx
-        int j = idx+1;
-        while(j<v.size() && v[j].first<=v[idx].first+2) 
-            j++;
-        long long consider = v[idx].second + solve(j,v,dp);
-        return dp[idx] = max(skip,consider);
-    }
-    long long maximumTotalDamage(vector<int>& power) {
-        int n = power.size();
-        map<long long,long long> mp;
-        for(int i=0;i<n;i++)
-            mp[power[i]]+=power[i];
-        vector<pair<long long,long long>> v;
-        for(auto it:mp)
-            v.push_back({it.first,it.second});
-        sort(v.begin(),v.end());
-        vector<long long> dp(v.size(), -1);
-        return solve(0,v,dp);
+    using info=pair<int, long long>;// (power, damage)
+    static long long maximumTotalDamage(vector<int>& power) {
+        const int n=power.size();
+        sort(power.begin(), power.end());
+
+        vector<info> spell={{power[0], power[0]}};
+        for(int i=1; i<n; i++){
+            int x=power[i]; 
+            if (x!=power[i-1]) spell.emplace_back(x, (long long)x);
+            else spell.back().second+=x;
+        }
+        int sz=spell.size();
+        vector<long long> dp(sz+1, 0);
+
+        for(int i=sz-1; i>=0; i--){
+            long long notake=dp[i+1];
+            long long take=0;
+            int j=i+1,  x=spell[i].first;
+            for(; j<sz && spell[j].first<=x+2; j++);
+
+            take=spell[i].second+dp[j];
+            dp[i]=max(take, notake);
+        }
+        return dp[0];
     }
 };
