@@ -1,36 +1,31 @@
 class Solution {
 public:
-    void dfs(int id, int r, int c, string word, vector<vector<char>>& board, bool & flag){
-        if(id == word.size()){
-            flag = true;
+    void dfs(int i, int j, int k, string word, vector<vector<char>>& board, int & flag){
+        char ch = board[i][j];
+        if(word.size() == k || (word.size() == 1 && ch == word[k])){
+            flag = 1;
             return;
         }
-        if(board[r][c] != word[id])
-            return;
-        char ch = board[r][c];
-        board[r][c] = '#';
-        if(r > 0)
-            dfs(id+1, r-1, c, word, board, flag);
-        if(r < board.size()-1)
-            dfs(id+1, r+1, c, word, board, flag);
-        if(c > 0)
-            dfs(id+1, r, c-1, word, board, flag);
-        if(c < board[0].size()-1)
-            dfs(id+1, r, c+1, word, board, flag);
-        board[r][c] = ch;
+        if(flag == 1 || ch != word[k])
+            return; 
+        board[i][j] = '#';    
+        if(i > 0)
+            dfs(i-1, j, k+1, word, board, flag);    
+        if(i < board.size() - 1)
+            dfs(i+1, j, k+1, word, board, flag);  
+        if(j > 0)
+            dfs(i, j-1, k+1, word, board, flag);  
+        if(j < board[0].size()-1)
+            dfs(i, j+1, k+1, word, board, flag);      
+        board[i][j] = ch;    
     }
     bool exist(vector<vector<char>>& board, string word) {
-        int m = board.size();
-        int n = board[0].size();
-        if(m == 1 && n == 1 && word.size() == 1)
-            return board[0][0] == word[0];
-        bool flag = false;
-        for(int i = 0; i < m; i++){
-            for(int j = 0; j < n; j++){
-                if(word[0] == board[i][j])
-                    dfs(0, i, j, word, board, flag);
+        int flag = 0;
+        for(int i = 0; i < board.size(); i++){
+            for(int j = 0; j < board[0].size(); j++){
+                dfs(i, j, 0, word, board, flag);
             }
         }
-        return flag;
+        return flag==1;
     }
 };
