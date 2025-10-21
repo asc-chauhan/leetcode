@@ -7,7 +7,7 @@ public:
         int l = nums[0] - k, h = nums.back() + k;
         for(auto x: nums){
             freq[x]++;
-            prefix[x- k]++;
+            prefix[x - k]++;
             prefix[x + k + 1]--;
         }
         int prev = 0, ans = 0;
