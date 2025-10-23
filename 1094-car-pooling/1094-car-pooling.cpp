@@ -8,11 +8,11 @@ public:
         }
         if(preSum[0] > capacity)
             return false;
+        int ans = 0;
         for(int i = 1; i < 1000; i++){
             preSum[i] += preSum[i-1];
-            if(preSum[i] > capacity)
-                return false;
+            ans = max(preSum[i], ans);
         }
-        return true;
+        return ans <= capacity;
     }
 };
