@@ -1,0 +1,18 @@
+class Solution {
+public:
+    bool carPooling(vector<vector<int>>& trips, int capacity) {
+        vector<int> preSum(1000+1, 0);
+        for(auto v: trips){
+            preSum[v[1]] += v[0];
+            preSum[v[2]] -= v[0];
+        }
+        if(preSum[0] > capacity)
+            return false;
+        for(int i = 1; i < 1000; i++){
+            preSum[i] += preSum[i-1];
+            if(preSum[i] > capacity)
+                return false;
+        }
+        return true;
+    }
+};
